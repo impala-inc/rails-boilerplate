@@ -1,8 +1,11 @@
 {
-	"name": "Ruby on Rails (Community)",
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
+	"name": "Ruby on Rails App",
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+
+	"service": "app",
+	"workspaceFolder": "/app",
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -10,7 +13,12 @@
 		"vscode": {
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"rebornix.Ruby"
+				"aki77.rails-db-schema",
+				"castwide.solargraph",
+				"kaiwood.endwise",
+				"koichisasada.vscode-rdbg",
+				"rebornix.ruby",
+				"redhat.vscode-yaml"
 			]
 		}
 	},
@@ -22,5 +30,5 @@
 	// "postCreateCommand": "ruby --version",
 
 	// Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	// "remoteUser": "vscode"
 }
