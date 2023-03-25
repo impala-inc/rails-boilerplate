@@ -14,18 +14,19 @@ services:
       - 3000:3000
     working_dir: /app
     tty: true
-    command: sh docker/app/startup.sh
+    stdin_open: true
     depends_on:
       - db
     environment:
       DATABASE_URL: postgres://postgres:mysecretpassword@db:5432/myapp_development
+    command: sh docker/app/startup.sh
 
   db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - postgres_volume:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: mysecretpassword
 
 volumes:
-  database:
+  postgres_volume:
