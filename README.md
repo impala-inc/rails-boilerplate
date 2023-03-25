@@ -1,6 +1,6 @@
 # rails-boilerplate
 
-これは[SeanSith/rails-with-vscode-remote-containers: A very basic Ruby on Rails setup using VSCode's Remote Containers](https://github.com/SeanSith/rails-with-vscode-remote-containers)を参考にVSCodeのリモートコンテナ環境でRails+PostgreSQLを構築するためのBoilerplateです。
+これは[SeanSith/rails-with-vscode-remote-containers: A very basic Ruby on Rails setup using VSCode's Remote Containers](https://github.com/SeanSith/rails-with-vscode-remote-containers)を参考にVSCodeのリモートコンテナ環境でRails+PostgreSQLを簡単に構築するためのBoilerplateです。
 
 ## 必要なもの
 
