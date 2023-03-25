@@ -14,18 +14,18 @@ services:
       - 3000:3000
     working_dir: /app
     tty: true
-    command: docker/app/startup.sh
-
-  database:
-    image: mariadb
-    volumes:
-      - "database:/var/lib/mysql"
-      - ".:/docker-entrypoint-initdb.d"
+    command: sh docker/app/startup.sh
+    depends_on:
+      - db
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-      MYSQL_ROOT_HOST: '%'
-    ports:
-      - 3306:3306
+      DATABASE_URL: postgres://postgres:mysecretpassword@db:5432/myapp_development
+
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
 
 volumes:
   database:

@@ -1,5 +1,5 @@
 {
-	"name": "Ruby on Rails App",
+	"name": "Rails App",
 	"dockerComposeFile": [
 		"../docker-compose.yml"
 	],

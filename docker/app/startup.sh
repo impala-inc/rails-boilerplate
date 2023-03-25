@@ -4,7 +4,7 @@ if [ -f Gemfile ] ; then
   bundle install
 else
   rails new . --force \
-              --database=mysql \
+              --database=postgresql \
               --skip-git --css=tailwind \
               --skip-jbuilder \
               --skip-action-mailer \
