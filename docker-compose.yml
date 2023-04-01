@@ -19,7 +19,7 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://postgres:mysecretpassword@db:5432/myapp_development
-    command: sh docker/app/startup.sh
+    command: ["docker/app/startup.sh"]
 
   db:
     image: postgres
