@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -e
 
 if [ -f Gemfile ] ; then
   bundle install
