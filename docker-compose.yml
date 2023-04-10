@@ -2,12 +2,15 @@ version: '3'
 
 services:
   app:
-    image: rails-app
+    container_name: rails-app
+    user: "1000:1000"
     build:
       context: .
       dockerfile: docker/app/Dockerfile.dev
     volumes:
-      - ./:/app
+      - ./:/app:cached
+      - rails_bundle:/app/vendor/bundle
+      - bashhistory:/commandhistory
     tmpfs:
       - /app/tmp/pids
     ports:
@@ -29,4 +32,6 @@ services:
       POSTGRES_PASSWORD: mysecretpassword
 
 volumes:
+  rails_bundle:
   postgres_volume:
+  bashhistory:
