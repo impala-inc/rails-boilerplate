@@ -9,20 +9,17 @@ services:
       dockerfile: docker/app/Dockerfile.dev
     volumes:
       - ./:/app:cached
-      - rails_bundle:/app/vendor/bundle
-      - bashhistory:/commandhistory
-    tmpfs:
-      - /app/tmp/pids
+      - rails_bundle:/app/vendor/bundle:delegated
+      - bashhistory:/commandhistory:delegated
     ports:
       - 3000:3000
-    working_dir: /app
-    tty: true
-    stdin_open: true
     depends_on:
       - db
     environment:
       DATABASE_URL: postgres://postgres:mysecretpassword@db:5432/myapp_development
     command: ["docker/app/startup.sh"]
+    tty: true
+    stdin_open: true
 
   db:
     image: postgres
