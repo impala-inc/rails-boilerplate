@@ -10,9 +10,4 @@ RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhisto
     && chown -R 1000:1000 /commandhistory \
     && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
 
-# Add vendor dir
-RUN mkdir vendor \
-    && mkdir vendor/bundle \
-    && chown -R 1000:1000 .
-
 CMD ["rails", "server", "-b", "0.0.0.0"]
