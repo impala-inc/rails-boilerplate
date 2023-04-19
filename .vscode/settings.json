@@ -1,0 +1,9 @@
+{
+  "rubyLsp.rubyVersionManager": "none",
+  "rubyLsp.enabledFeatures": {
+    "inlayHint": false,
+  },
+  "editor.semanticHighlighting.enabled": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+}

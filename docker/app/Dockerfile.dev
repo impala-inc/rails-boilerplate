@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/ruby:3-bullseye
 
 WORKDIR /app
-RUN gem update --system && gem install solargraph rails foreman
+RUN gem update --system && gem install rails foreman ruby-lsp
 
 # For saving bash history
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
