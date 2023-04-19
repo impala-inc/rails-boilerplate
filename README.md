@@ -1,6 +1,6 @@
 # rails-boilerplate
 
-これは[SeanSith/rails-with-vscode-remote-containers: A very basic Ruby on Rails setup using VSCode's Remote Containers](https://github.com/SeanSith/rails-with-vscode-remote-containers)を参考にVSCodeのリモートコンテナ環境でNext.jsを簡単に構築するためのBoilerplateです。
+これは[SeanSith/rails-with-vscode-remote-containers: A very basic Ruby on Rails setup using VSCode's Remote Containers](https://github.com/SeanSith/rails-with-vscode-remote-containers)を参考にVSCodeのリモートコンテナでRuby on Railsの開発環境を簡単に構築するためのBoilerplateです。
 
 ## 必要なもの
 
@@ -10,7 +10,7 @@
 
 ## 使い方
 
-- ダウンロードしたフォルダをVisual Studio Codeで開く
+- ダウンロードしたフォルダをVSCodeで開く
 - 左下の「><」のアイコンをクリックして「Reopen in Container」を開く
 - 初回はRailsがインストールされる
 - しばらく待ってブラウザで `http://localhost:3000` を開く
