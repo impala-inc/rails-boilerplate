@@ -15,7 +15,8 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://postgres:mysecretpassword@db:5432/myapp_development
+      DATABASE_URL: postgres://postgres:postgres@db:5432/app_development
+      DATABASE_HOST: db
     command: ["sh", "docker/app/startup.sh"]
     tty: true
     stdin_open: true
@@ -25,7 +26,7 @@ services:
     volumes:
       - postgres_volume:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: postgres
 
 volumes:
   rails_bundle:
