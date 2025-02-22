@@ -5,6 +5,11 @@
 	],
 	"service": "app",
 	"workspaceFolder": "/app",
+	"remoteUser": "vscode",
+	"updateRemoteUserUID": true,
+	"settings": {
+		"terminal.integrated.defaultProfile.linux": "zsh"
+	},
 	"customizations": {
 		"vscode": {
 			"extensions": [

@@ -1,15 +1,14 @@
-version: '4'
+version: "4"
 
 services:
   app:
-    user: "1000:1000"
     build:
       context: .
       dockerfile: docker/app/Dockerfile.dev
     volumes:
       - ./:/app:cached
       - rails_bundle:/app/vendor/bundle:delegated
-      - bashhistory:/commandhistory:delegated
+      - zsh_history:/home/vscode/.zsh_history:delegated
     ports:
       - 3000:3000
     depends_on:
@@ -31,4 +30,4 @@ services:
 volumes:
   rails_bundle:
   postgres_volume:
-  bashhistory:
+  zsh_history:

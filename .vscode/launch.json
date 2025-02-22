@@ -5,17 +5,28 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Rails App",
+            "name": "Rails Development",
             "type": "Ruby",
             "request": "launch",
-            // Current dir using env variable input in tasks.json
-            "cwd": "${workspaceRoot}/test-project", 
-            // run bundle install before rails server
-            "preLaunchTask": "Create test-project",
+            "cwd": "${workspaceRoot}/test-project",
             "program": "bin/rails",
+            "env": {
+                "RAILS_ENV": "development",
+                "PORT": "3000",
+                "BINDING": "0.0.0.0"
+            },
+            "args": [
+                "server",
+                "-b", "${env:BINDING}",
+                "-p", "${env:PORT}"
+            ],
+            "preLaunchTask": "Create test-project",
             "postDebugTask": "Delete test-project",
-            // Setup debug binding IP and port.
-            "args": ["s", "-b", "0.0.0.0", "-p", "3000"], 
+            "showDebuggerOutput": true,
+            "pathToRbenv": "/usr/local/bin/rbenv",
+            "useBundler": true,
+            "pathToBundler": "/usr/local/bin/bundle",
+            "console": "integratedTerminal"
         }
     ]
 }
