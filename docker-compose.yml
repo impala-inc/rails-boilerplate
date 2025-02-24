@@ -16,6 +16,7 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:postgres@db:5432/app_development
       DATABASE_HOST: db
+      RAILS_MODE: ${RAILS_MODE:-fullstack}
     command: ["sh", "docker/app/startup.sh"]
     tty: true
     stdin_open: true

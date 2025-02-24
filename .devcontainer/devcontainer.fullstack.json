@@ -1,5 +1,5 @@
 {
-	"name": "Rails App",
+	"name": "Rails Fullstack App",
 	"dockerComposeFile": [
 		"../docker-compose.yml"
 	],
@@ -8,7 +8,7 @@
 	"remoteUser": "vscode",
 	"updateRemoteUserUID": true,
 	"remoteEnv": {
-		"RAILS_MODE": "api"
+		"RAILS_MODE": "fullstack"
 	},
 	"settings": {
 		"terminal.integrated.defaultProfile.linux": "zsh"
@@ -23,4 +23,4 @@
 			]
 		}
 	}
-}
+} 

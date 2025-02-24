@@ -1,5 +1,5 @@
 {
-	"name": "Rails App",
+	"name": "Rails API App",
 	"dockerComposeFile": [
 		"../docker-compose.yml"
 	],
@@ -23,4 +23,4 @@
 			]
 		}
 	}
-}
+} 
