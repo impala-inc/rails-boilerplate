@@ -1,15 +1,14 @@
-version: '4'
+version: "4"
 
 services:
   app:
-    user: "1000:1000"
     build:
       context: .
       dockerfile: docker/app/Dockerfile.dev
     volumes:
       - ./:/app:cached
       - rails_bundle:/app/vendor/bundle:delegated
-      - bashhistory:/commandhistory:delegated
+      - zsh_history:/home/vscode/.zsh_history:delegated
     ports:
       - 3000:3000
     depends_on:
@@ -17,6 +16,7 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:postgres@db:5432/app_development
       DATABASE_HOST: db
+      RAILS_MODE: ${RAILS_MODE:-fullstack}
     command: ["sh", "docker/app/startup.sh"]
     tty: true
     stdin_open: true
@@ -31,4 +31,4 @@ services:
 volumes:
   rails_bundle:
   postgres_volume:
-  bashhistory:
+  zsh_history:

@@ -1,10 +1,8 @@
-#!/bin/sh -e
-
-sudo chown -R 1000:1000 .
+#!/bin/zsh -e
 
 bundle config --local path vendor/bundle
 
-if [ -f Gemfile ] ; then
+if [ -f Gemfile ]; then
   bundle install
 else
   bundle init
