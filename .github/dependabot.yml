@@ -1,0 +1,35 @@
+version: 2
+updates:
+  # GitHub Actionsの依存関係を維持する
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+
+  # Ruby/Bundlerの依存関係を維持する
+  - package-ecosystem: "bundler"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    labels:
+      - "dependencies"
+      - "ruby"
+    commit-message:
+      prefix: "build"
+      include: "scope"
+    ignore:
+      # メジャーアップデートは自動更新しない
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"] 
