@@ -22,5 +22,13 @@
 				"redhat.vscode-yaml"
 			]
 		}
+	},
+	"features": {
+		"ghcr.io/devcontainers-extra/features/zsh-plugins:0": {
+			"plugins": [
+				"zsh-autosuggestions",
+				"zsh-syntax-highlighting"
+			]
+		}
 	}
 }

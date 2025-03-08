@@ -12,22 +12,4 @@ RUN apt-get update && apt-get install -y \
 RUN gem update --system && \
     gem install bundler rails foreman ruby-lsp solargraph
 
-# zshの設定を改善
-RUN mkdir -p /home/vscode/.zsh && \
-    git clone https://github.com/zsh-users/zsh-autosuggestions /home/vscode/.zsh/zsh-autosuggestions && \
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting /home/vscode/.zsh/zsh-syntax-highlighting && \
-    echo "source /home/vscode/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> /home/vscode/.zshrc && \
-    echo "source /home/vscode/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> /home/vscode/.zshrc && \
-    echo "export HISTSIZE=10000" >> /home/vscode/.zshrc && \
-    echo "export SAVEHIST=10000" >> /home/vscode/.zshrc && \
-    echo "setopt share_history" >> /home/vscode/.zshrc && \
-    chown -R vscode:vscode /home/vscode/.zsh && \
-    chown vscode:vscode /home/vscode/.zshrc
-
-# zsh履歴の設定
-RUN mkdir -p /commandhistory && \
-    touch /commandhistory/.zsh_history && \
-    echo 'export HISTFILE=/commandhistory/.zsh_history' >> /home/vscode/.zshrc && \
-    chown -R vscode:vscode /commandhistory
-
 CMD ["rails", "server", "-b", "0.0.0.0"]
