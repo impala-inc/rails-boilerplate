@@ -51,7 +51,7 @@ updates:
 
   # Dev Containersの依存関係を維持する
   - package-ecosystem: "devcontainers"
-    directory: "/.devcontainer"
+    directory: "/"
     schedule:
       interval: "weekly"
       day: "monday"
