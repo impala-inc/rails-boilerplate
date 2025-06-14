@@ -1,0 +1,267 @@
+name: Test Rails Boilerplate
+
+on:
+  push:
+    branches: [main, staging, production, "*/develop"]
+  pull_request:
+    branches: [main, staging, production]
+
+env:
+  RUBY_VERSION: 3.2.0
+  POSTGRES_DB: test_db
+  POSTGRES_USER: postgres  
+  POSTGRES_PASSWORD: postgres
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+
+      - name: Cache bundle gems
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Initialize Rails app (API mode)
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
+          RAILS_ENV: test
+        run: |
+          # Railsアプリを生成（API専用モード）
+          bundle init
+          bundle add rails --version "~> 7.0"
+          bundle exec rails new . --force \
+            --database=postgresql \
+            --api \
+            --skip-git \
+            --skip-jbuilder \
+            --skip-action-mailer \
+            --skip-active-storage \
+            --skip-action-text
+          
+          # データベース設定を更新
+          cat > config/database.yml << EOF
+          test:
+            adapter: postgresql
+            encoding: unicode
+            database: test_db
+            host: localhost
+            username: postgres
+            password: postgres
+            pool: 5
+            timeout: 5000
+          EOF
+
+      - name: Install dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Setup database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+
+      - name: Run RSpec tests (if available)
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
+        run: |
+          if [ -f "spec/rails_helper.rb" ]; then
+            bundle exec rspec
+          else
+            echo "No RSpec tests found, skipping..."
+          fi
+
+      - name: Run Rails tests (if available)
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
+        run: |
+          if [ -d "test" ]; then
+            bundle exec rails test
+          else
+            echo "No Rails tests found, skipping..."
+          fi
+
+      - name: Run security audit
+        run: |
+          if bundle list | grep -q bundler-audit; then
+            bundle exec bundler-audit --update
+          else
+            echo "bundler-audit not installed, skipping security audit..."
+          fi
+
+      - name: Run Rubocop (if available)
+        run: |
+          if bundle list | grep -q rubocop; then
+            bundle exec rubocop
+          else
+            echo "Rubocop not installed, skipping style check..."
+          fi
+
+  test-fullstack:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Cache bundle gems
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-fullstack-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-fullstack-
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Initialize Rails app (Fullstack mode)
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
+          RAILS_ENV: test
+        run: |
+          # Railsアプリを生成（フルスタックモード）
+          bundle init
+          bundle add rails --version "~> 7.0"
+          bundle exec rails new . --force \
+            --database=postgresql \
+            --skip-git \
+            --css=tailwind \
+            --skip-jbuilder \
+            --skip-action-mailer \
+            --skip-test \
+            --skip-active-storage \
+            --skip-action-text
+          
+          # データベース設定を更新
+          cat > config/database.yml << EOF
+          test:
+            adapter: postgresql
+            encoding: unicode
+            database: test_db
+            host: localhost
+            username: postgres
+            password: postgres
+            pool: 5
+            timeout: 5000
+          EOF
+
+      - name: Install dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Setup database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+
+      - name: Precompile assets
+        env:
+          RAILS_ENV: test
+        run: |
+          bundle exec rails assets:precompile
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
+        run: |
+          if [ -f "spec/rails_helper.rb" ]; then
+            bundle exec rspec
+          elif [ -d "test" ]; then
+            bundle exec rails test
+          else
+            echo "No tests found, basic setup validation complete"
+          fi
+
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Lint Dockerfiles
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: docker/app/Dockerfile.dev
+
+      - name: Lint YAML files
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: .github/workflows
+          format: parsable
+
+      - name: Check shell scripts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+          find . -name "*.sh" -exec shellcheck {} \;
