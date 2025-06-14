@@ -6,4 +6,34 @@
   "editor.semanticHighlighting.enabled": true,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
+  
+  // Claude Code specific settings
+  "claude.autoSave": true,
+  "claude.contextWindow": "large",
+  "claude.includeFileTypes": [
+    "rb",
+    "erb",
+    "yml",
+    "yaml",
+    "json",
+    "js",
+    "css",
+    "scss",
+    "md",
+    "dockerfile",
+    "sh"
+  ],
+  "claude.excludePatterns": [
+    "**/node_modules/**",
+    "**/vendor/**",
+    "**/tmp/**",
+    "**/log/**",
+    "**/.git/**",
+    "**/coverage/**",
+    "**/public/assets/**",
+    "**/app/assets/builds/**"
+  ],
+  "claude.enableFileWatching": true,
+  "claude.maxFileSize": "1MB",
+  "claude.preferredLanguage": "ruby"
 }

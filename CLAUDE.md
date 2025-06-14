@@ -9,6 +9,7 @@ This is a Rails boilerplate template that generates new Rails applications insid
 ## Development Commands
 
 ### Container-based Development
+
 ```bash
 # Start development environment (from VS Code Dev Container)
 ./bin/dev
@@ -20,6 +21,7 @@ This is a Rails boilerplate template that generates new Rails applications insid
 ```
 
 ### Running Services
+
 ```bash
 # Rails server (configured in Procfile.dev)
 bin/rails server -p 3000 -b 0.0.0.0
@@ -31,22 +33,26 @@ bin/rails tailwindcss:watch
 ## Architecture
 
 ### Template Structure
+
 - **Dynamic Application Generation**: Creates Rails apps on container startup via `docker/app/startup.sh`
 - **Flexible Modes**: Supports API-only or full-stack Rails applications via `RAILS_MODE` environment variable
 - **Container-First**: Designed for VS Code Dev Containers with Docker Compose
 
 ### Generated Rails Configuration
+
 - **Database**: PostgreSQL (configured in docker-compose.yml)
 - **CSS Framework**: Tailwind CSS
 - **Skipped Components**: Git, Jbuilder, ActionMailer, tests, ActiveStorage, ActionText
 
 ### Development Container Modes
+
 - **API Mode**: `.devcontainer/devcontainer.json` (`RAILS_MODE=api`)
 - **Fullstack Mode**: `.devcontainer/devcontainer.fullstack.json` (`RAILS_MODE=fullstack`)
 
 ## Git Workflow
 
 Based on `docs/git_rules.md`:
+
 - **Branch Naming**: `{user}/feature/`, `{user}/fix/`, `{user}/release/`
 - **Main Branches**: `production`, `main`, `{user}/develop`, `staging`
 - **Commit Style**: Conventional commits with bilingual (Japanese/English) support
@@ -54,12 +60,14 @@ Based on `docs/git_rules.md`:
 ## Development Environment
 
 ### Required VS Code Extensions
+
 - Ruby LSP (shopify.ruby-lsp)
 - Rails DB Schema (aki77.rails-db-schema)
 - GitHub Copilot
 - EndWise (kaiwood.endwise)
 
 ### Database
+
 - PostgreSQL runs in separate container
 - Connection configured via docker-compose.yml
 - Persistent volume storage
