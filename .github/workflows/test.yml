@@ -1,6 +1,7 @@
+---
 name: Rails CI
 
-on:
+"on":
   push:
     branches: [main, staging, production, "*/develop"]
   pull_request:
@@ -9,13 +10,13 @@ on:
 env:
   RUBY_VERSION: 3.2.0
   POSTGRES_DB: test_db
-  POSTGRES_USER: postgres  
+  POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     services:
       postgres:
         image: postgres:15
@@ -99,7 +100,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

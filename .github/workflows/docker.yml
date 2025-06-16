@@ -1,6 +1,7 @@
+---
 name: Docker CI
 
-on:
+"on":
   push:
     branches: [main, staging, production, "*/develop"]
   pull_request:
@@ -9,7 +10,7 @@ on:
 jobs:
   docker-build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,7 +32,7 @@ jobs:
   security-scan:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
