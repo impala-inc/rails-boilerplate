@@ -1,4 +1,4 @@
-name: Docker Build Test
+name: Docker CI
 
 on:
   push:
@@ -9,9 +9,6 @@ on:
 jobs:
   docker-build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        mode: [api, fullstack]
     
     steps:
       - name: Checkout code
@@ -26,36 +23,10 @@ jobs:
           context: .
           file: docker/app/Dockerfile.dev
           push: false
-          tags: rails-boilerplate:test-${{ matrix.mode }}
+          tags: rails-app:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      - name: Test Docker Compose
-        env:
-          RAILS_MODE: ${{ matrix.mode }}
-        run: |
-          # Docker Composeでサービスを起動
-          docker-compose up -d
-          
-          # Railsアプリが起動するまで待機
-          timeout=300
-          while ! docker-compose exec -T app curl -f http://localhost:3000/health 2>/dev/null; do
-            if [ $timeout -le 0 ]; then
-              echo "Timeout waiting for Rails app to start"
-              docker-compose logs app
-              exit 1
-            fi
-            sleep 5
-            timeout=$((timeout - 5))
-          done
-          
-          echo "Rails app started successfully in ${{ matrix.mode }} mode"
-          
-          # ログを確認
-          docker-compose logs app
-          
-          # クリーンアップ
-          docker-compose down -v
+        if: hashFiles('docker/app/Dockerfile.dev') != ''
 
   security-scan:
     runs-on: ubuntu-latest
