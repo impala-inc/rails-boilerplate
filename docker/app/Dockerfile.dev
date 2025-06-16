@@ -3,6 +3,7 @@ FROM mcr.microsoft.com/devcontainers/ruby:3.4
 WORKDIR /app
 
 # システムパッケージのアップデートを追加
+# hadolint ignore=DL3008
 RUN apt-get update && apt-get install -y --no-install-recommends \
     vim \
     && apt-get clean \
