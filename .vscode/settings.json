@@ -1,15 +1,43 @@
 {
   "rubyLsp.rubyVersionManager": "none",
   "rubyLsp.enabledFeatures": {
+    "codeActions": true,
+    "diagnostics": true,
+    "documentHighlights": true,
+    "documentLink": true,
+    "documentSymbols": true,
+    "foldingRanges": true,
+    "formatting": true,
+    "hover": true,
     "inlayHint": false,
+    "onTypeFormatting": true,
+    "selectionRanges": true,
+    "semanticHighlighting": true,
+    "completion": true,
+    "codeLens": true,
+    "definition": true,
+    "workspaceSymbol": true
   },
   "editor.semanticHighlighting.enabled": true,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
-  
-  // Claude Code specific settings
-  "claude.autoSave": true,
-  "claude.contextWindow": "large",
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "files.associations": {
+    "*.erb": "erb",
+    "Gemfile": "ruby",
+    "Rakefile": "ruby",
+    "*.ru": "ruby"
+  },
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[erb]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.tabSize": 2
+  },
   "claude.includeFileTypes": [
     "rb",
     "erb",
@@ -32,8 +60,5 @@
     "**/coverage/**",
     "**/public/assets/**",
     "**/app/assets/builds/**"
-  ],
-  "claude.enableFileWatching": true,
-  "claude.maxFileSize": "1MB",
-  "claude.preferredLanguage": "ruby"
+  ]
 }
