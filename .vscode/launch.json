@@ -1,31 +1,22 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Rails Development",
+            "name": "Rails Server",
             "type": "Ruby",
             "request": "launch",
-            "cwd": "${workspaceRoot}/test-project",
+            "cwd": "${workspaceRoot}",
             "program": "bin/rails",
             "env": {
-                "RAILS_ENV": "development",
-                "PORT": "3000",
-                "BINDING": "0.0.0.0"
+                "RAILS_ENV": "development"
             },
             "args": [
                 "server",
-                "-b", "${env:BINDING}",
-                "-p", "${env:PORT}"
+                "-b", "0.0.0.0",
+                "-p", "3000"
             ],
-            "preLaunchTask": "Create test-project",
-            "postDebugTask": "Delete test-project",
             "showDebuggerOutput": true,
-            "pathToRbenv": "/usr/local/bin/rbenv",
             "useBundler": true,
-            "pathToBundler": "/usr/local/bin/bundle",
             "console": "integratedTerminal"
         }
     ]

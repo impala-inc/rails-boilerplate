@@ -1,22 +1,91 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Create test-project",
+            "label": "Rails Server",
             "type": "shell",
-            "command": "rails new test-project -G --skip && cd test-project && bundle install",
-            "problemMatcher": [],
+            "command": "bin/rails",
+            "args": ["server", "-b", "0.0.0.0", "-p", "3000"],
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Rails Console",
+            "type": "shell",
+            "command": "bin/rails",
+            "args": ["console"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
             }
         },
         {
-            "label": "Delete test-project",
+            "label": "Bundle Install",
             "type": "shell",
-            "command": "cd test-project && rm -rf * && rm -f .ruby-version"
+            "command": "bundle",
+            "args": ["install"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "DB Migrate",
+            "type": "shell",
+            "command": "bin/rails",
+            "args": ["db:migrate"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "DB Setup",
+            "type": "shell",
+            "command": "bin/rails",
+            "args": ["db:setup"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Tailwind Watch",
+            "type": "shell",
+            "command": "bin/rails",
+            "args": ["tailwindcss:watch"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
         }
-    ],
+    ]
 }
